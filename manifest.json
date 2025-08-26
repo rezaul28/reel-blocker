@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Reel Blocker By Reza",
+  "version": "1.6",
+  "description": "Blocks all reels from Facebook.",
+  "permissions": ["scripting"],
+  "host_permissions": [
+    "https://www.facebook.com/*",
+    "https://www.youtube.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/*",
+        "https://www.youtube.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}
