@@ -66,6 +66,33 @@ function blockFollowPosts() {
 
 setInterval(blockFollowPosts, 1000);
 
+// Remove sponsored posts
+function blockSponsoredPosts() {
+  // Look for more specific sponsored post indicators
+  const sponsoredElements = document.querySelectorAll('[data-ad-rendering-role="profile_name"]');
+  
+  sponsoredElements.forEach(el => {
+    // Only remove posts that specifically have the sponsored profile name role
+    let post = el.closest('div[role="article"], div[data-pagelet^="FeedUnit_"], div[data-pagelet*="FeedUnit_"]');
+    if (post) {
+      post.remove();
+    }
+  });
+  
+  // Also look for posts with "Sponsored" text (more reliable indicator)
+  const allElements = document.querySelectorAll('*');
+  allElements.forEach(el => {
+    if (el.textContent && el.textContent.trim() === 'Sponsored') {
+      let post = el.closest('div[role="article"], div[data-pagelet^="FeedUnit_"], div[data-pagelet*="FeedUnit_"]');
+      if (post) {
+        post.remove();
+      }
+    }
+  });
+}
+
+setInterval(blockSponsoredPosts, 1000);
+
 // Redirect away from /reel/* if user stays for more than 1 minute
 function checkReelUrlAndRedirect() {
   const isFacebookReelPage = window.location.hostname.includes('facebook.com') && window.location.pathname.startsWith('/reel/');
